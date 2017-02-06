@@ -17,14 +17,14 @@ import edu.cmu.pocketsphinx.SpeechRecognizer;
 import edu.cmu.pocketsphinx.SpeechRecognizerSetup;
 
 
-public class SphinxActivity extends Activity implements
+public class SphinxSpaActivity extends Activity implements
         RecognitionListener {
 
     private SpeechRecognizer recognizer;
 
     private static final String WAKEUP_SEARCH = "wakeup";
 
-    private static final String KEYPHRASE = "input command";
+    private static final String KEYPHRASE = "entrada comando";
 
     private TextView tV;
 
@@ -52,23 +52,23 @@ public class SphinxActivity extends Activity implements
             @Override
             protected Exception doInBackground(Void... params) {
                 try {
-                    Assets assets = new Assets(SphinxActivity.this);
+                    Assets assets = new Assets(SphinxSpaActivity.this);
                     File assetDir = assets.syncAssets();
-                    /*recognizer = SpeechRecognizerSetup.defaultSetup()
+                    recognizer = SpeechRecognizerSetup.defaultSetup()
                             .setAcousticModel(new File(assetDir, "es"))
                             .setDictionary(new File(assetDir, "es.dict"))
                             .setKeywordThreshold(1e-45f)
                             .setBoolean("-allphone_ci", true)
-                            .getRecognizer();*/
+                            .getRecognizer();
 
-                    recognizer = SpeechRecognizerSetup.defaultSetup()
+                    /*recognizer = SpeechRecognizerSetup.defaultSetup()
                             .setAcousticModel(new File(assetDir, "en-us-ptm"))
                             .setDictionary(new File(assetDir, "cmudict-en-us.dict"))
                             .setKeywordThreshold(1e-45f)
                             .setBoolean("-allphone_ci", true)
-                            .getRecognizer();
+                            .getRecognizer();*/
 
-                    recognizer.addListener(SphinxActivity.this);
+                    recognizer.addListener(SphinxSpaActivity.this);
 
                     recognizer.addKeyphraseSearch(WAKEUP_SEARCH, KEYPHRASE);
                 } catch (IOException e) {
@@ -80,10 +80,10 @@ public class SphinxActivity extends Activity implements
             @Override
             protected void onPostExecute(Exception result) {
                 if (result != null) {
-                    Toast.makeText(SphinxActivity.this, "Failed to init recognizer " + result, Toast.LENGTH_LONG);
+                    Toast.makeText(SphinxSpaActivity.this, "Failed to init recognizer " + result, Toast.LENGTH_LONG);
                 } else {
                     tV.setText("Di: "+KEYPHRASE);
-                    Toast.makeText(SphinxActivity.this, "Starting", Toast.LENGTH_LONG);
+                    Toast.makeText(SphinxSpaActivity.this, "Starting", Toast.LENGTH_LONG);
                     Log.e("Tag", "onPostExecute");
                     recognizer.startListening(WAKEUP_SEARCH);
                 }

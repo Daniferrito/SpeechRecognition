@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ToggleButton;
 
 /**
  * Created by Jesús Tomás on 06/02/2017.
@@ -11,10 +12,13 @@ import android.view.View;
 
 public class MainActivity extends Activity {
 
+    ToggleButton tB;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        tB = (ToggleButton) findViewById(R.id.toggleButton);
     }
 
     public void android1(View v) {
@@ -30,6 +34,9 @@ public class MainActivity extends Activity {
     }
 
     public void sphinx(View v) {
-        startActivity(new Intent(this, SphinxActivity.class));
+        if(tB.isChecked())
+            startActivity(new Intent(this, SphinxSpaActivity.class));
+        else
+            startActivity(new Intent(this, SphinxActivity.class));
     }
 }
