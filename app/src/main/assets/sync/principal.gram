@@ -11,4 +11,4 @@ grammar principal;
 
 <palabra> = <lado> | <deldetr> | <pieza> | <digito> | <verbo> | <fallo>;
 
-public <principal> = <palabra>+;
+public <principal> = puerta <lado> <deldetr> <verbo>;

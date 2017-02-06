@@ -32,7 +32,7 @@ public class Main2Activity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main1);
-        ((AudioManager)getSystemService(AUDIO_SERVICE)).setStreamVolume(AudioManager.STREAM_MUSIC,AudioManager.ADJUST_MUTE,0);
+        //((AudioManager)getSystemService(AUDIO_SERVICE)).setStreamVolume(AudioManager.STREAM_MUSIC,AudioManager.ADJUST_MUTE,0);
         mSpeechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
         mSpeechRecognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         mSpeechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
@@ -110,19 +110,22 @@ public class Main2Activity extends Activity {
         @Override
         public void onEvent(int eventType, Bundle params)
         {
-            Log.e(TAG, "onRmsChanged");
+            Log.e(TAG, "onEvent");
         }
 
         @Override
         public void onPartialResults(Bundle partialResults)
         {
-            Log.e(TAG, "onRmsChanged");
+            Log.e(TAG, "onPartialResults");
+            ArrayList<String> matches = partialResults.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+            txtSpeechInput.setText(matches.get(0));
         }
 
         @Override
-        public void onReadyForSpeech(Bundle params)
+        public void onReadyForSpeech(Bundle bundle)
         {
             Log.e(TAG, "onReadyForSpeech"); //$NON-NLS-1$
+
         }
 
         @Override

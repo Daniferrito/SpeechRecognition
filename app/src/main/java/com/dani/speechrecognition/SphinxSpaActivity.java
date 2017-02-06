@@ -5,6 +5,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,6 +61,13 @@ public class SphinxSpaActivity extends Activity implements
 
         estado = Estado.STANDBY;
 
+        ((Button) findViewById(R.id.button)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cambiarA(Estado.PRINCIPAL);
+            }
+        });
+
         ttS =new TextToSpeech(this, null);
         setUp();
         Log.e("Tag", "onCreate");
@@ -75,6 +84,7 @@ public class SphinxSpaActivity extends Activity implements
     void cambiarA(Estado estado){
         recognizer.stop();
         numPalabras = 0;
+        Log.e("SphinxSpa",estado.name());
         switch (estado){
             case STANDBY:
                 recognizer.startListening(WAKEUP_SEARCH);
@@ -139,7 +149,7 @@ public class SphinxSpaActivity extends Activity implements
                     tV.setText("Di: "+KEYPHRASE);
                     Toast.makeText(SphinxSpaActivity.this, "Starting", Toast.LENGTH_LONG);
                     Log.e("Tag", "onPostExecute");
-                    cambiarA(Estado.STANDBY);
+                    //cambiarA(Estado.STANDBY);
                 }
             }
         }.execute();
@@ -164,53 +174,18 @@ public class SphinxSpaActivity extends Activity implements
         }
         String s = hypothesis.getHypstr();
         tV.setText(s);
-        String[] sArray = s.split(" ");
-        if(sArray.length>=numPalabras){
-            analizar(sArray);
-        }
 
 
-    }
-
-    String[] iz = {"izquierdo","izquierda"};
-    String[] der = {"derecho","derecha"};
-    String[] del = {"delantero"};
-    String[] tra = {"trasero","trasera"};
-    String[] pie = {"puerta"};
-
-    void analizar(String[] s){
-        for (;numPalabras<s.length;numPalabras++){
-            if(s[numPalabras].equals(KEYPHRASE)){
-                cambiarA(Estado.PRINCIPAL);
-                return;
-            }
-            if(Arrays.asList(iz).contains(s[numPalabras])){
-                izquierdo = true;
-                continue;
-            }
-            if(Arrays.asList(der).contains(s[numPalabras])){
-                izquierdo = false;
-                continue;
-            }
-            if(Arrays.asList(del).contains(s[numPalabras])){
-                delantero = true;
-                continue;
-            }
-            if(Arrays.asList(tra).contains(s[numPalabras])){
-                delantero = false;
-                continue;
-            }
-        }
-        tV2.setText(""+(izquierdo?"Izquierdo ":"Derecho ")+(delantero?"Delantero ":"Trasero"));
 
     }
 
     @Override
     public void onResult(Hypothesis hypothesis) {
-        /*if (hypothesis!=null){
+        if (hypothesis!=null){
             Log.e("Tag", "onResult " + hypothesis.getHypstr());
             Toast.makeText(this,"encontrado",Toast.LENGTH_LONG);
-        }*/
+            cambiarA(Estado.STANDBY);
+        }
     }
 
     @Override
