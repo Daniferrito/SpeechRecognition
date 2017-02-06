@@ -3,12 +3,14 @@ package com.dani.speechrecognition;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Locale;
 
 import edu.cmu.pocketsphinx.Assets;
 import edu.cmu.pocketsphinx.Hypothesis;
@@ -28,11 +30,30 @@ public class SphinxSpaActivity extends Activity implements
 
     private TextView tV;
 
+    TextToSpeech ttS;
+    boolean dicho = false;
+    boolean inici = false;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sphynx);
         tV = (TextView) findViewById(R.id.txtSpeechInput);
+
+
+        ttS =new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status != TextToSpeech.ERROR) {
+                    ttS.setLanguage(new Locale("es", "ES"));
+                    inici = true;
+                    speakInic();
+                }
+            }
+        });
+
+
 
         setUp();
         Log.e("Tag", "onCreate");
@@ -43,6 +64,12 @@ public class SphinxSpaActivity extends Activity implements
         super.onStop();
         if(recognizer!=null){
             recognizer.stop();
+        }
+    }
+
+    void speakInic(){
+        if(dicho&&inici){
+            ttS.speak("Ya puedes hablar",TextToSpeech.QUEUE_FLUSH,null);
         }
     }
 
@@ -83,6 +110,8 @@ public class SphinxSpaActivity extends Activity implements
                     Toast.makeText(SphinxSpaActivity.this, "Failed to init recognizer " + result, Toast.LENGTH_LONG);
                 } else {
                     tV.setText("Di: "+KEYPHRASE);
+                    dicho = true;
+                    speakInic();
                     Toast.makeText(SphinxSpaActivity.this, "Starting", Toast.LENGTH_LONG);
                     Log.e("Tag", "onPostExecute");
                     recognizer.startListening(WAKEUP_SEARCH);
@@ -106,6 +135,9 @@ public class SphinxSpaActivity extends Activity implements
     public void onPartialResult(Hypothesis hypothesis) {
 
         if (hypothesis!=null&&hypothesis.getHypstr().equals(KEYPHRASE)){
+            if(tV.getText().toString().equals("Di: "+KEYPHRASE)){
+                ttS.speak("Iniciado",TextToSpeech.QUEUE_FLUSH,null);
+            }
             tV.setText("Encontrado");
             Log.e("Tag", "onPartialResult " + hypothesis.getHypstr());
             Toast.makeText(this,"partial",Toast.LENGTH_LONG);
