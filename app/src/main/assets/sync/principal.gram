@@ -2,13 +2,14 @@
 
 grammar principal;
 
+
 <lado> = izquierdo | izquierda | derecho | derecha;
-<deldetr> = delantero |delantera | trasero | trasera;
-<pieza> = puerta;
+<deldetr> = delantero | delantera | trasero | trasera;
+
+
+<pieza> = puerta izquierda | puerta derecha | techo | parachoques delantero | parachoques trasero | capó | maletero | guardabarros;
 <digito> = uno | dos | tres | cuatro | cinco | seis | siete | ocho | nueve | cero;
-<verbo> = arreglado | arreglada | añadir | fallo;
-<fallo> = abolladura;
+<verbo> = arreglado | arreglada | fallo | (añadir <fallo>);
+<fallo> = abolladura | ralladura | fallo color;
 
-<palabra> = <lado> | <deldetr> | <pieza> | <digito> | <verbo> | <fallo>;
-
-public <principal> = puerta <lado> <deldetr> <verbo>;
+public <principal> = <pieza> grid <digito> <verbo>;
