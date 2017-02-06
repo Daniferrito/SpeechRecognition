@@ -7,6 +7,7 @@
     android:background="@color/bg_gradient_start"
     tools:context="com.dani.speechrecognition.SphinxActivity">
 
+
     <TextView
         android:id="@+id/txtSpeechInput"
         android:layout_width="wrap_content"
@@ -17,5 +18,15 @@
         android:textColor="@color/white"
         android:textSize="26dp"
         android:textStyle="normal" />
+    <TextView
+        android:id="@+id/txtSpeechInput2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:textColor="@color/white"
+        android:textSize="26dp"
+        android:textStyle="normal"
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

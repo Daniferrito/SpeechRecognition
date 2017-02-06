@@ -9,6 +9,7 @@ en-us-ptm/noisedict
 en-us-ptm/sendump
 en-us-ptm/transition_matrices
 en-us-ptm/variances
+es-red.dict
 es.dict
 es/feat.params
 es/mdef
@@ -19,4 +20,6 @@ es/sendump
 es/transition_matrices
 es/variances
 menu.gram
+principal.gram
+sino.gram
 weather.dmp

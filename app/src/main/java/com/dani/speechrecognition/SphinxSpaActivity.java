@@ -10,7 +10,8 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Locale;
+import java.util.Arrays;
+import java.util.List;
 
 import edu.cmu.pocketsphinx.Assets;
 import edu.cmu.pocketsphinx.Hypothesis;
@@ -25,14 +26,28 @@ public class SphinxSpaActivity extends Activity implements
     private SpeechRecognizer recognizer;
 
     private static final String WAKEUP_SEARCH = "wakeup";
+    private static final String MAIN_SEARCH = "main";
+    private static final String CONFIRMATION_SEARCH = "confirmation";
 
-    private static final String KEYPHRASE = "entrada comando";
+    private boolean izquierdo = true;
+    private boolean delantero = true;
+    private int posicion = 1;
 
-    private TextView tV;
+
+
+    private static final String KEYPHRASE = "despertar";
+
+    private TextView tV, tV2;
 
     TextToSpeech ttS;
-    boolean dicho = false;
-    boolean inici = false;
+
+    public enum Estado {
+        STANDBY, PRINCIPAL, REPETIRCOMANDO, REPETIRDEFECTOS
+    }
+
+    private Estado estado;
+
+    private int numPalabras;
 
 
     @Override
@@ -40,21 +55,11 @@ public class SphinxSpaActivity extends Activity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sphynx);
         tV = (TextView) findViewById(R.id.txtSpeechInput);
+        tV2 = (TextView) findViewById(R.id.txtSpeechInput2);
 
+        estado = Estado.STANDBY;
 
-        ttS =new TextToSpeech(this, new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if(status != TextToSpeech.ERROR) {
-                    ttS.setLanguage(new Locale("es", "ES"));
-                    inici = true;
-                    speakInic();
-                }
-            }
-        });
-
-
-
+        ttS =new TextToSpeech(this, null);
         setUp();
         Log.e("Tag", "onCreate");
     }
@@ -67,9 +72,22 @@ public class SphinxSpaActivity extends Activity implements
         }
     }
 
-    void speakInic(){
-        if(dicho&&inici){
-            ttS.speak("Ya puedes hablar",TextToSpeech.QUEUE_FLUSH,null);
+    void cambiarA(Estado estado){
+        recognizer.stop();
+        numPalabras = 0;
+        switch (estado){
+            case STANDBY:
+                recognizer.startListening(WAKEUP_SEARCH);
+                ttS.speak("Modo espera",TextToSpeech.QUEUE_FLUSH,null);
+                break;
+            case PRINCIPAL:
+                recognizer.startListening(MAIN_SEARCH,10000);
+                break;
+            case REPETIRCOMANDO:
+                recognizer.startListening(CONFIRMATION_SEARCH,10000);
+                break;
+            default:
+                cambiarA(Estado.STANDBY);
         }
     }
 
@@ -83,7 +101,7 @@ public class SphinxSpaActivity extends Activity implements
                     File assetDir = assets.syncAssets();
                     recognizer = SpeechRecognizerSetup.defaultSetup()
                             .setAcousticModel(new File(assetDir, "es"))
-                            .setDictionary(new File(assetDir, "es.dict"))
+                            .setDictionary(new File(assetDir, "es-red.dict"))
                             .setKeywordThreshold(1e-45f)
                             .setBoolean("-allphone_ci", true)
                             .getRecognizer();
@@ -97,7 +115,16 @@ public class SphinxSpaActivity extends Activity implements
 
                     recognizer.addListener(SphinxSpaActivity.this);
 
+                    //Standby
                     recognizer.addKeyphraseSearch(WAKEUP_SEARCH, KEYPHRASE);
+
+                    //Main
+                    recognizer.addGrammarSearch(MAIN_SEARCH, new File(assetDir, "principal.gram"));
+
+                    //Confirmation
+                    recognizer.addGrammarSearch(CONFIRMATION_SEARCH, new File(assetDir, "sino.gram"));
+
+
                 } catch (IOException e) {
                     return e;
                 }
@@ -110,11 +137,9 @@ public class SphinxSpaActivity extends Activity implements
                     Toast.makeText(SphinxSpaActivity.this, "Failed to init recognizer " + result, Toast.LENGTH_LONG);
                 } else {
                     tV.setText("Di: "+KEYPHRASE);
-                    dicho = true;
-                    speakInic();
                     Toast.makeText(SphinxSpaActivity.this, "Starting", Toast.LENGTH_LONG);
                     Log.e("Tag", "onPostExecute");
-                    recognizer.startListening(WAKEUP_SEARCH);
+                    cambiarA(Estado.STANDBY);
                 }
             }
         }.execute();
@@ -134,22 +159,58 @@ public class SphinxSpaActivity extends Activity implements
     @Override
     public void onPartialResult(Hypothesis hypothesis) {
 
-        if (hypothesis!=null&&hypothesis.getHypstr().equals(KEYPHRASE)){
-            if(tV.getText().toString().equals("Di: "+KEYPHRASE)){
-                ttS.speak("Iniciado",TextToSpeech.QUEUE_FLUSH,null);
-            }
-            tV.setText("Encontrado");
-            Log.e("Tag", "onPartialResult " + hypothesis.getHypstr());
-            Toast.makeText(this,"partial",Toast.LENGTH_LONG);
+        if (hypothesis==null){
+            return;
         }
+        String s = hypothesis.getHypstr();
+        tV.setText(s);
+        String[] sArray = s.split(" ");
+        if(sArray.length>=numPalabras){
+            analizar(sArray);
+        }
+
+
+    }
+
+    String[] iz = {"izquierdo","izquierda"};
+    String[] der = {"derecho","derecha"};
+    String[] del = {"delantero"};
+    String[] tra = {"trasero","trasera"};
+    String[] pie = {"puerta"};
+
+    void analizar(String[] s){
+        for (;numPalabras<s.length;numPalabras++){
+            if(s[numPalabras].equals(KEYPHRASE)){
+                cambiarA(Estado.PRINCIPAL);
+                return;
+            }
+            if(Arrays.asList(iz).contains(s[numPalabras])){
+                izquierdo = true;
+                continue;
+            }
+            if(Arrays.asList(der).contains(s[numPalabras])){
+                izquierdo = false;
+                continue;
+            }
+            if(Arrays.asList(del).contains(s[numPalabras])){
+                delantero = true;
+                continue;
+            }
+            if(Arrays.asList(tra).contains(s[numPalabras])){
+                delantero = false;
+                continue;
+            }
+        }
+        tV2.setText(""+(izquierdo?"Izquierdo ":"Derecho ")+(delantero?"Delantero ":"Trasero"));
+
     }
 
     @Override
     public void onResult(Hypothesis hypothesis) {
-        if (hypothesis!=null){
+        /*if (hypothesis!=null){
             Log.e("Tag", "onResult " + hypothesis.getHypstr());
             Toast.makeText(this,"encontrado",Toast.LENGTH_LONG);
-        }
+        }*/
     }
 
     @Override

@@ -1,0 +1,14 @@
+#JSGF V1.0;
+
+grammar principal;
+
+<lado> = izquierdo | izquierda | derecho | derecha;
+<deldetr> = delantero |delantera | trasero | trasera;
+<pieza> = puerta;
+<digito> = uno | dos | tres | cuatro | cinco | seis | siete | ocho | nueve | cero;
+<verbo> = arreglado | arreglada | añadir | fallo;
+<fallo> = abolladura;
+
+<palabra> = <lado> | <deldetr> | <pieza> | <digito> | <verbo> | <fallo>;
+
+public <principal> = <palabra>+;
