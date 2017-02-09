@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +25,7 @@ public class SphinxActivity extends Activity implements
     private SpeechRecognizer recognizer;
 
     private static final String WAKEUP_SEARCH = "wakeup";
+    private static final String MAIN_SEARCH = "mainSearch";
 
     private static final String KEYPHRASE = "input command";
 
@@ -35,6 +38,15 @@ public class SphinxActivity extends Activity implements
         tV = (TextView) findViewById(R.id.txtSpeechInput);
 
         setUp();
+
+        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tV.setText("");
+                recognizer.stop();
+                recognizer.startListening(MAIN_SEARCH);
+            }
+        });
         Log.e("Tag", "onCreate");
     }
 
@@ -71,6 +83,9 @@ public class SphinxActivity extends Activity implements
                     recognizer.addListener(SphinxActivity.this);
 
                     recognizer.addKeyphraseSearch(WAKEUP_SEARCH, KEYPHRASE);
+
+                    recognizer.addGrammarSearch(MAIN_SEARCH,new File(assetDir,"main.gram"));
+
                 } catch (IOException e) {
                     return e;
                 }
@@ -82,10 +97,8 @@ public class SphinxActivity extends Activity implements
                 if (result != null) {
                     Toast.makeText(SphinxActivity.this, "Failed to init recognizer " + result, Toast.LENGTH_LONG);
                 } else {
-                    tV.setText("Di: "+KEYPHRASE);
-                    Toast.makeText(SphinxActivity.this, "Starting", Toast.LENGTH_LONG);
+                    tV.setText("Ready");
                     Log.e("Tag", "onPostExecute");
-                    recognizer.startListening(WAKEUP_SEARCH);
                 }
             }
         }.execute();
@@ -105,9 +118,8 @@ public class SphinxActivity extends Activity implements
     @Override
     public void onPartialResult(Hypothesis hypothesis) {
 
-        if (hypothesis!=null&&hypothesis.getHypstr().equals(KEYPHRASE)){
-            tV.setText("Encontrado");
-            Log.e("Tag", "onPartialResult " + hypothesis.getHypstr());
+        if (hypothesis!=null){
+            tV.setText(hypothesis.getHypstr());
             Toast.makeText(this,"partial",Toast.LENGTH_LONG);
         }
     }
@@ -115,6 +127,7 @@ public class SphinxActivity extends Activity implements
     @Override
     public void onResult(Hypothesis hypothesis) {
         if (hypothesis!=null){
+            tV.setText(hypothesis.getHypstr());
             Log.e("Tag", "onResult " + hypothesis.getHypstr());
             Toast.makeText(this,"encontrado",Toast.LENGTH_LONG);
         }

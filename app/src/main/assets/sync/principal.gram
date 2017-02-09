@@ -12,4 +12,5 @@ grammar principal;
 <verbo> = arreglado | arreglada | fallo | (añadir <fallo>);
 <fallo> = abolladura | ralladura | fallo color;
 
-public <principal> = <pieza> grid <digito> <verbo>;
+/**public <principal> = <pieza> grid <digito> <verbo>;*/
+public <principal> = <digito> <digito> <digito> <digito> <digito>;
