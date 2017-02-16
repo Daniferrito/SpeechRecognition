@@ -1,0 +1,16 @@
+#JSGF V1.0;
+
+grammar principal;
+
+
+<lado> = izquierdo | izquierda | derecho | derecha;
+<deldetr> = delantero | delantera | trasero | trasera;
+
+
+<pieza> = puerta izquierda | puerta derecha | techo | parachoques delantero | parachoques trasero | capó | maletero | guardabarros;
+<digito> = uno | dos | tres | cuatro | cinco | seis | siete | ocho | nueve | cero;
+<verbo> = arreglado | arreglada | fallo | (añadir <fallo>);
+<fallo> = abolladura | ralladura | fallo color;
+
+/**public <principal> = <pieza> grid <digito> <verbo>;*/
+public <principal> = <digito> <digito> <digito> <digito> <digito>;
