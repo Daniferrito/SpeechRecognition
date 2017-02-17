@@ -17,14 +17,14 @@ public class VocabularyTest {
         assertThat( voc.wordToSimbol("lápiz"), is(1));
     }
     @Test
-    public void testVocabularyValidator_SimbolToWord_ReturnsCorrectWord() {
+    public void vocabularyValidator_SimbolToWord_ReturnsCorrectWord() {
         Vocabulary voc = new Vocabulary("casa", "lápiz", "libro", "árbol");
         assertThat( voc.simbolToWord(1), is("lápiz"));
     }
 
 
     @Test
-    public void testVocabularyValidator_varios() {
+    public void vocabularyValidator_varios() {
         Vocabulary voc = new Vocabulary("casa", "lápiz", "libro", "árbol");
         if (voc.wordToSimbol("lápiz") != 1) {
             //Toast.makeText(this, "error", Toast.LENGTH_LONG).show();
