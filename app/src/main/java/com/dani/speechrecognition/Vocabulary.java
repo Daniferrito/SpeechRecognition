@@ -98,4 +98,15 @@ public class Vocabulary {
                                 distance[i][j - 1] + 1);
         return distance[n - 1][m - 1];
     }
+
+    public int add(String word) {
+        int simbol = size();
+        mapWords.put(word, simbol);
+        listWords.add(simbol, word);
+        return simbol;
+    }
+
+    public int size(){
+        return listWords.size();
+    }
 }

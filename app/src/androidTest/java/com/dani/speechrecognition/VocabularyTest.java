@@ -1,5 +1,7 @@
 package com.dani.speechrecognition;
 
+//import android.support.test.runner.AndroidJUnit4;
+
 import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.Test;
@@ -9,7 +11,7 @@ import static com.dani.speechrecognition.Vocabulary.editDistance;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-@RunWith(AndroidJUnit4.class)
+//@RunWith(AndroidJUnit4.class)
 public class VocabularyTest {
     @Test
     public void vocabularyValidator_wordToSimbol_ReturnsCorrectSimbol() {
