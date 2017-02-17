@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SpeechRecognition3.iml" filepath="$PROJECT_DIR$/SpeechRecognition3.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/speechjava/speechjava.iml" filepath="$PROJECT_DIR$/speechjava/speechjava.iml" />
     </modules>
   </component>
 </project>
