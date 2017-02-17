@@ -64,7 +64,9 @@ public class SphinxSpaActivity extends Activity implements
         ((Button) findViewById(R.id.button)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cambiarA(Estado.PRINCIPAL);
+                //cambiarA(Estado.PRINCIPAL);
+                recognizer.stop();
+                recognizer.startListening(MAIN_SEARCH,5000);
             }
         });
 
@@ -74,11 +76,10 @@ public class SphinxSpaActivity extends Activity implements
     }
 
     @Override
-    public void onStop(){
-        super.onStop();
-        if(recognizer!=null){
-            recognizer.stop();
-        }
+    public void onDestroy() {
+        super.onDestroy();
+        recognizer.cancel();
+        recognizer.shutdown();
     }
 
     void cambiarA(Estado estado){
@@ -146,7 +147,7 @@ public class SphinxSpaActivity extends Activity implements
                 if (result != null) {
                     Toast.makeText(SphinxSpaActivity.this, "Failed to init recognizer " + result, Toast.LENGTH_LONG);
                 } else {
-                    tV.setText("Di: "+KEYPHRASE);
+                    tV.setText("Pulsa el boton");
                     Toast.makeText(SphinxSpaActivity.this, "Starting", Toast.LENGTH_LONG);
                     Log.e("Tag", "onPostExecute");
                     //cambiarA(Estado.STANDBY);
@@ -173,7 +174,7 @@ public class SphinxSpaActivity extends Activity implements
             return;
         }
         String s = hypothesis.getHypstr();
-        tV.setText(s);
+        tV.setText(""+ hypothesis.getBestScore()+" "+s);
 
 
 
@@ -184,7 +185,8 @@ public class SphinxSpaActivity extends Activity implements
         if (hypothesis!=null){
             Log.e("Tag", "onResult " + hypothesis.getHypstr());
             Toast.makeText(this,"encontrado",Toast.LENGTH_LONG);
-            cambiarA(Estado.STANDBY);
+            //cambiarA(Estado.STANDBY);
+            recognizer.stop();
         }
     }
 

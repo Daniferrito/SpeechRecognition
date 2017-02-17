@@ -13,8 +13,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import static com.dani.speechrecognition.Vocabulary.editDistance;
 
 
 public class Main2Activity extends Activity {
@@ -44,7 +47,6 @@ public class Main2Activity extends Activity {
         SpeechRecognitionListener listener = new SpeechRecognitionListener();
         mSpeechRecognizer.setRecognitionListener(listener);
 
-
         btnSpeak = (ImageButton) findViewById(R.id.btnSpeak);
         txtSpeechInput = (TextView) findViewById(R.id.txtSpeechInput);
         btnSpeak.setOnClickListener(new View.OnClickListener() {
@@ -54,6 +56,26 @@ public class Main2Activity extends Activity {
                 mSpeechRecognizer.startListening(mSpeechRecognizerIntent);
             }
         });
+
+
+//Test
+        Vocabulary voc = new Vocabulary("casa", "lápiz", "libro", "árbol");
+        if( voc.wordToSimbol("lápiz")!=1) {
+            Toast.makeText(this, "error", Toast.LENGTH_LONG).show();
+        }
+        if( !voc.simbolToWord(3).equals("árbol")) {
+            Toast.makeText(this, "error", Toast.LENGTH_LONG).show();
+        }
+
+        if(editDistance("árbol", "arbo") != 2) {
+            Toast.makeText(this, "error", Toast.LENGTH_LONG).show();
+        }
+
+        int[] simbols = voc.wordsToSimbols("casa árbo libro");
+        String s = voc.simbolsTowords(simbols);
+        if( !s.equals("casa árbol libro")) {
+            Toast.makeText(this, "error", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
