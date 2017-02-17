@@ -1,10 +1,15 @@
 package com.dani.speechrecognition;
 
-        import org.junit.Test;
-        import static com.dani.speechrecognition.Vocabulary.editDistance;
-        import static org.hamcrest.core.Is.is;
-        import static org.junit.Assert.assertThat;
+import android.support.test.runner.AndroidJUnit4;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import static com.dani.speechrecognition.Vocabulary.editDistance;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+
+@RunWith(AndroidJUnit4.class)
 public class VocabularyTest {
     @Test
     public void vocabularyValidator_wordToSimbol_ReturnsCorrectSimbol() {
@@ -12,14 +17,14 @@ public class VocabularyTest {
         assertThat( voc.wordToSimbol("lápiz"), is(1));
     }
     @Test
-    public void vocabularyValidator_SimbolToWord_ReturnsCorrectWord() {
+    public void testVocabularyValidator_SimbolToWord_ReturnsCorrectWord() {
         Vocabulary voc = new Vocabulary("casa", "lápiz", "libro", "árbol");
         assertThat( voc.simbolToWord(1), is("lápiz"));
     }
 
 
     @Test
-    public void vocabularyValidator_varios() {
+    public void testVocabularyValidator_varios() {
         Vocabulary voc = new Vocabulary("casa", "lápiz", "libro", "árbol");
         if (voc.wordToSimbol("lápiz") != 1) {
             //Toast.makeText(this, "error", Toast.LENGTH_LONG).show();
