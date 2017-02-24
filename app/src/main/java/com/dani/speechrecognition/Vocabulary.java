@@ -62,7 +62,8 @@ public class Vocabulary {
         return words;
     }
 
-    int[] wordsToSimbols(String phase) {
+    int[] wordsToSimbols(String phase, int distance) {
+        distance = 0;
         String[] words = phase.split(" ");
         int[] simbols = new int[words.length];
         for (int i = 0; i < words.length; i++) {
@@ -79,6 +80,7 @@ public class Vocabulary {
                 }
                 if (bestDistance <= 3) {
                     simbols[i] = bestSimbol;
+                    distance += bestDistance;
                 }
             }
         }
@@ -116,7 +118,13 @@ public class Vocabulary {
         return simbol;
     }
 
-    public int size(){
+    public void add(String... words) {
+        for (String word : words) {
+            add(word);
+        }
+    }
+
+    public int size() {
         return listWords.size();
     }
 

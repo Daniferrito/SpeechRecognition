@@ -48,12 +48,18 @@ public class Main3Activity extends Main2Activity {
         public void onResults(Bundle results) {
             Log.d(TAG, "onResults");
             ArrayList<String> outputs = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-
-            txtSpeechInput.setText(outputs.get(0));
-            textToSpeech.speak(outputs.get(0), TextToSpeech.QUEUE_FLUSH, null);
+            String bestOutput="";
+            int bestDistance = 1000;
             for (String s: outputs){
-                Log.e(TAG, s);
+                int distance = grammar.validSecuence(s);
+                if (distance<bestDistance){
+                    bestOutput = s;
+                    bestDistance = distance;
+                }
+                Log.e(TAG, distance+" "+s);
             }
+            txtSpeechInput.setText(bestOutput);
+            textToSpeech.speak(bestOutput, TextToSpeech.QUEUE_FLUSH, null);
         }
     }
 
