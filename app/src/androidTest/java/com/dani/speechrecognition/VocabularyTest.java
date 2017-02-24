@@ -13,6 +13,7 @@ import static org.junit.Assert.assertThat;
 
 //@RunWith(AndroidJUnit4.class)
 public class VocabularyTest {
+
     @Test
     public void vocabularyValidator_wordToSimbol_ReturnsCorrectSimbol() {
         Vocabulary voc = new Vocabulary("casa", "lápiz", "libro", "árbol");

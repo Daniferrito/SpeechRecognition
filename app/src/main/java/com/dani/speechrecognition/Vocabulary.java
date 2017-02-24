@@ -5,23 +5,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Jesús Tomás on 16/02/2017.
- */
-
 public class Vocabulary {
 
-    Map<String, Integer> mapWords;
-    List<String> listWords;
+    private int maxSize;
+    private Map<String, Integer> mapWords;
+    private List<String> listWords;
 
     public Vocabulary() {
         mapWords = new HashMap<>();
         listWords = new ArrayList<>();
+        maxSize = 1000;
     }
 
-    public Vocabulary(int length) {
-        mapWords = new HashMap<>(length);
-        listWords = new ArrayList<>(length);
+    public Vocabulary(int maxSize) {
+        mapWords = new HashMap<>(maxSize);
+        listWords = new ArrayList<>(maxSize);
+        this.maxSize = maxSize;
     }
 
     public Vocabulary(String... words) {
@@ -37,6 +36,17 @@ public class Vocabulary {
             return mapWords.get(word);
         } catch (Exception e) {
             return -1;
+        }
+    }
+
+    public int wordToSimbolAdding(String word) {
+        try {
+            return mapWords.get(word);
+        } catch (Exception e) {
+            int simbol = listWords.size();
+            mapWords.put(word, simbol);
+            listWords.add(simbol, word);
+            return simbol;
         }
     }
 
@@ -109,4 +119,9 @@ public class Vocabulary {
     public int size(){
         return listWords.size();
     }
+
+    public int getMaxSize() {
+        return maxSize;
+    }
+
 }

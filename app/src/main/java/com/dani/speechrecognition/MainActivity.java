@@ -19,6 +19,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         tB = (ToggleButton) findViewById(R.id.toggleButton);
+        // TODO: 24/02/2017 Hacer que este botón funcione con MainActivity 2
     }
 
     public void android1(View v) {

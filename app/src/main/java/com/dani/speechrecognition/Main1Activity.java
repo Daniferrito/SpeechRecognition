@@ -13,9 +13,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Locale;
 
+// RECONOCIMIENTO CON ANDROID BASADO EN INTENT
 
 public class Main1Activity extends Activity {
-
     private TextView txtSpeechInput;
     private ImageButton btnSpeak;
     private final int REQ_CODE_SPEECH_INPUT = 100;

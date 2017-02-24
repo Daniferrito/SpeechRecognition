@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:weightSum="1">
 
     <TextView
         android:text="TextView"
@@ -29,26 +30,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/button1"
-        android:onClick="android1"/>
+        android:onClick="android1"
+        android:visibility="gone" />
 
     <Button
-        android:text="Android 2"
+        android:text="Android - texto libre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/button2"
-        android:onClick="android2" />
+        android:onClick="android2"
+        android:layout_weight="0.15" />
 
     <Button
-        android:text="Android 3"
+        android:text="Android - con gramática"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/button3"
-        android:onClick="android3" />
+        android:onClick="android3"
+        android:layout_weight="0.10" />
 
     <Button
         android:text="Sphinx"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/button4"
-        android:onClick="sphinx" />
+        android:onClick="sphinx"
+        android:layout_weight="0.14" />
 </LinearLayout>
