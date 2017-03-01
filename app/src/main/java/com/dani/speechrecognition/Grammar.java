@@ -1,0 +1,132 @@
+package com.dani.speechrecognition;
+
+import android.util.Log;
+import android.util.Pair;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by Jesús Tomás on 17/02/2017.
+ * Gramáticas deterministas (nolo podemos estar en un estado)
+ * <p>
+ * Formada por nodos y arcos, cada arco cosume una palabra
+ * Regla: desde un nodo, consumiento una palabra pasamos a otro nodo
+ * <INI> uno  <NUMERO>
+ * <p>
+ * Regla con multiples arcos
+ * <INI> uno | dos | tres | cuatro <NUMERO>
+ * <p>
+ * Una gramática comienza por <INI> y acaba por <END>
+ */
+
+public class Grammar {
+
+    class Rule {
+        int arc[]; //  arco[simbol] = nodo_alcanzado
+        Rule(Vocabulary vocabulary, int iEndNode, String... words) {
+            arc = new int[vocabulary.getMaxSize()];
+            for (String word : words) {
+                int simbol = vocabulary.wordToSimbolAdding(word);
+                arc[simbol] = iEndNode;
+            }
+        }
+    }
+
+    class Node {
+        String name;
+        int indexNode;
+        List<Rule> rules;
+
+        Node(String name, int indexNode) {
+            this.name = name;
+            this.indexNode = indexNode;
+            rules = new ArrayList<>();
+        }
+    }
+
+    List<Node> nodes; //Lista de nodos de la gramática
+    Vocabulary vocSimbols;
+    Vocabulary vocNodes;
+
+    protected static final String TAG = "Grammar";
+    public static int NULL_NODE = 0;
+    public static int INI_NODE = 1;
+    public static int END_NODE = 2;
+
+    public Grammar(int maxVocSize) {
+        vocSimbols = new Vocabulary(maxVocSize);
+        vocNodes = new Vocabulary("<NULL>", "<INI>", "<END>");
+        nodes = new ArrayList<>(50);
+        nodes.add(NULL_NODE, new Node("<NULL>", NULL_NODE)); // Un arco a <NULL> = no hay arco
+        nodes.add(INI_NODE, new Node("<INI>", INI_NODE)); // Inicio de la gramática
+        nodes.add(END_NODE, new Node("<END>", END_NODE)); // Fin de la gramática
+    }
+
+    Grammar(Vocabulary vocSimbols) {
+        new Grammar(vocSimbols.getMaxSize());
+        this.vocSimbols = vocSimbols;
+    }
+
+    public void newRule(String iniNode, String endNode, String... words) {
+        int iIniNode = vocNodes.wordToSimbol(iniNode);
+        if (iIniNode == -1) {
+            Log.e("GRAMMAR", "Error en Regla: Simbolo " + iniNode + " no existe.");
+            return;
+        }
+        int iEndNode = vocNodes.wordToSimbol(endNode);
+        if (iEndNode == -1) {
+            iEndNode = vocNodes.add(endNode);
+            nodes.add(iEndNode, new Node(endNode, iEndNode));
+        }
+        Node node = nodes.get(iIniNode);
+        node.rules.add(new Rule(vocSimbols, iEndNode, words));
+    }
+
+    public int validSecuence(String words) {
+        Pair<Integer,int[]> p = vocSimbols.wordsToSimbols(words) ;
+        if (validSecuence(p.second)) {
+            return p.first;
+        } else {
+            return -1;
+        }
+    }
+
+    public boolean validSecuence(int[] simbols) {
+        return validSecuence(simbols, 0, 1);
+    }
+
+    public boolean validSecuence(int[] simbols, int i, int iNode) {
+        boolean valid = false;
+        Node node = nodes.get(iNode);
+        for (Rule rule : node.rules) {
+            int destNode = rule.arc[simbols[i]];
+            if (destNode != NULL_NODE) {
+                if (i == simbols.length - 1) {
+                    if (destNode == END_NODE) {
+                        return true;
+                    }
+                } else {
+                    valid = valid || validSecuence(simbols, i + 1, destNode);
+                }
+            }
+        }
+        return valid;
+    }
+
+    String bestSecuence(List<String> secuences, int bestScore){ // Si una palabra no esta en voc. la reemplaza por la más parecida
+        String bestOutput="";                                   // Selecciona la secuencia de menor distancia de edición
+        bestScore = 1000;                                       // que esté en la gramática
+        for (String s: secuences){
+            int score = validSecuence(s);
+            if (score<bestScore){
+                bestOutput = s;
+                bestScore = score;
+                if (score==0) return bestOutput;
+            }
+            Log.e(TAG, score+" "+s);
+        }
+        return bestOutput;
+    }
+
+}

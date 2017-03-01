@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 // RECONOCIMIENTO CON ANDROID BASADO EN CLASE SpeechRecognizer
 // CON RESTRICCIONES POR GRAMÁTICA
@@ -43,24 +44,18 @@ public class Main3Activity extends Main2Activity {
         return gramar;
     }
 
+
     class SpeechRecognitionListener2 extends SpeechRecognitionListener {
         @Override
         public void onResults(Bundle results) {
             Log.d(TAG, "onResults");
             ArrayList<String> outputs = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-            String bestOutput="";
-            int bestDistance = 1000;
-            for (String s: outputs){
-                int distance = grammar.validSecuence(s);
-                if (distance<bestDistance){
-                    bestOutput = s;
-                    bestDistance = distance;
-                }
-                Log.e(TAG, distance+" "+s);
-            }
-            txtSpeechInput.setText(bestOutput);
-            textToSpeech.speak(bestOutput, TextToSpeech.QUEUE_FLUSH, null);
+            int score=-1;
+            String output = grammar.bestSecuence(outputs, score);
+            txtSpeechInput.setText(output);
+            textToSpeech.speak(output, TextToSpeech.QUEUE_FLUSH, null);
         }
     }
+
 
 }

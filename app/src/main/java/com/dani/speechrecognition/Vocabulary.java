@@ -1,5 +1,7 @@
 package com.dani.speechrecognition;
 
+import android.util.Pair;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -62,10 +64,12 @@ public class Vocabulary {
         return words;
     }
 
-    int[] wordsToSimbols(String phase, int distance) {
-        distance = 0;
+
+    Pair<Integer, int[]> wordsToSimbols(String phase) { //Devuelve la distancia de edición acumulada
+        int distance = 0;
         String[] words = phase.split(" ");
         int[] simbols = new int[words.length];
+
         for (int i = 0; i < words.length; i++) {
             simbols[i] = wordToSimbol(words[i]);
             if (simbols[i] == -1) { //buscamos palbra más parecida
@@ -84,7 +88,7 @@ public class Vocabulary {
                 }
             }
         }
-        return simbols;
+        return new Pair(distance,simbols);
     }
 
     public static int min(int a, int b, int c) {
@@ -96,8 +100,8 @@ public class Vocabulary {
     }
 
     public static int editDistance(String target, String source) {
-        int n = target.length();
-        int m = source.length();
+        int n = target.length()+1;
+        int m = source.length()+1;
         int[][] distance = new int[n][m];
         for (int i = 0; i < n; i++) distance[i][0] = i;
         for (int j = 0; j < m; j++) distance[0][j] = j;
@@ -106,7 +110,7 @@ public class Vocabulary {
                 distance[i][j] =
                         min(distance[i - 1][j] + 1,
                                 distance[i - 1][j - 1] +
-                                        (target.charAt(i) == source.charAt(j) ? 0 : 2),
+                                        (target.charAt(i-1) == source.charAt(j-1) ? 0 : 1),
                                 distance[i][j - 1] + 1);
         return distance[n - 1][m - 1];
     }

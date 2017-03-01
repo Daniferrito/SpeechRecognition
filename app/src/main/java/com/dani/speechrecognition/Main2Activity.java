@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class Main2Activity extends Activity {
 
-    protected String TAG = "Main2";
+    protected static final String TAG = "Main2";
     protected SpeechRecognizer speechRecognizer;
     protected TextToSpeech textToSpeech;
     protected Intent speechRecognizerIntent;
