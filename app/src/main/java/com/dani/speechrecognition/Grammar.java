@@ -100,6 +100,7 @@ public class Grammar {
         boolean valid = false;
         Node node = nodes.get(iNode);
         for (Rule rule : node.rules) {
+            if (simbols[i]==-1) return false;  //Contemplar inserción de símbolos con un peso
             int destNode = rule.arc[simbols[i]];
             if (destNode != NULL_NODE) {
                 if (i == simbols.length - 1) {
@@ -114,19 +115,24 @@ public class Grammar {
         return valid;
     }
 
-    String bestSecuence(List<String> secuences, int bestScore){ // Si una palabra no esta en voc. la reemplaza por la más parecida
-        String bestOutput="";                                   // Selecciona la secuencia de menor distancia de edición
-        bestScore = 1000;                                       // que esté en la gramática
-        for (String s: secuences){
+    Pair<String,Integer> bestSecuenceAndScore(List<String> secuences){
+        String bestOutput="";           // Si una palabra no esta en voc. la reemplaza por la más
+        int bestScore = 1000;           // parecida. Selecciona la secuencia de menor distancia
+        for (String s: secuences){      // de edición que esté en la gramática
             int score = validSecuence(s);
             if (score<bestScore){
                 bestOutput = s;
                 bestScore = score;
-                if (score==0) return bestOutput;
+                if (score==0) new Pair(bestOutput, 0);
             }
             Log.e(TAG, score+" "+s);
         }
-        return bestOutput;
+        return new Pair(bestOutput, bestScore);
+    }
+
+    String bestSecuence(List<String> secuences){
+        Pair<String,Integer> pair = bestSecuenceAndScore(secuences);
+        return pair.first;
     }
 
 }

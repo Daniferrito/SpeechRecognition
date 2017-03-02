@@ -51,7 +51,7 @@ public class Main3Activity extends Main2Activity {
             Log.d(TAG, "onResults");
             ArrayList<String> outputs = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
             int score=-1;
-            String output = grammar.bestSecuence(outputs, score);
+            String output = grammar.bestSecuence(outputs);
             txtSpeechInput.setText(output);
             textToSpeech.speak(output, TextToSpeech.QUEUE_FLUSH, null);
         }
