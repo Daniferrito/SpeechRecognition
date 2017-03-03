@@ -23,7 +23,6 @@ public class VocabularyTest {
 
         assertThat(editDistance("lápiz", "lápiz"), is(0));
         assertThat(editDistance("árbol", "arbo"), is(2));
-
     }
 
     @Test

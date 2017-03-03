@@ -83,12 +83,14 @@ public class Grammar {
         node.rules.add(new Rule(vocSimbols, iEndNode, words));
     }
 
+    public final static int DISTANCE_WHEN_NO_IN_GRAMMAR  = 1000;
+
     public int validSecuence(String words) {
         Pair<Integer,int[]> p = vocSimbols.wordsToSimbols(words) ;
         if (validSecuence(p.second)) {
             return p.first;
         } else {
-            return -1;
+            return DISTANCE_WHEN_NO_IN_GRAMMAR;
         }
     }
 
@@ -116,9 +118,9 @@ public class Grammar {
     }
 
     Pair<String,Integer> bestSecuenceAndScore(List<String> secuences){
-        String bestOutput="";           // Si una palabra no esta en voc. la reemplaza por la más
-        int bestScore = 1000;           // parecida. Selecciona la secuencia de menor distancia
-        for (String s: secuences){      // de edición que esté en la gramática
+        String bestOutput="";              // Si una palabra no esta en voc. la reemplaza por la más
+        int bestScore = Integer.MAX_VALUE; // parecida. Selecciona la secuencia de menor distancia
+        for (String s: secuences){         // de edición que esté en la gramática
             int score = validSecuence(s);
             if (score<bestScore){
                 bestOutput = s;

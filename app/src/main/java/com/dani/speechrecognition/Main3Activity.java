@@ -18,6 +18,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.dani.speechrecognition.Preprocessing.preprocessingSentences;
+
 // RECONOCIMIENTO CON ANDROID BASADO EN CLASE SpeechRecognizer
 // CON RESTRICCIONES POR GRAMÁTICA
 
@@ -35,22 +37,19 @@ public class Main3Activity extends Main2Activity {
     }
 
     Grammar initGrammar(){
-        Grammar gramar = new Grammar(100);
-        //gramar.newRule();
+        Grammar grammar = new Grammar(8); //8 = tamaño máximo de vocabulario
         grammar.newRule("<INI>","<NUM>","uno","dos","tres","cuatro","cinco","seis","siete","ocho");
         grammar.newRule("<NUM>","<NUM>","uno","dos","tres","cuatro","cinco","seis","siete","ocho");
         grammar.newRule("<NUM>","<END>","uno","dos","tres","cuatro","cinco","seis","siete","ocho");
-
-        return gramar;
+        return grammar;
     }
-
 
     class SpeechRecognitionListener2 extends SpeechRecognitionListener {
         @Override
         public void onResults(Bundle results) {
             Log.d(TAG, "onResults");
-            ArrayList<String> outputs = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-            int score=-1;
+            List<String> outputs = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+            outputs = preprocessingSentences(outputs);
             String output = grammar.bestSecuence(outputs);
             txtSpeechInput.setText(output);
             textToSpeech.speak(output, TextToSpeech.QUEUE_FLUSH, null);

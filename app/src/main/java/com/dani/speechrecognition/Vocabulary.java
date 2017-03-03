@@ -64,6 +64,8 @@ public class Vocabulary {
         return words;
     }
 
+    public final static int MAX_EDIT_DISTANCE = 3;
+    public final static int DISTANCE_WHEN_HIGHER_MAX_EDIT = 100;
 
     Pair<Integer, int[]> wordsToSimbols(String phase) { //Devuelve la distancia de edición acumulada
         int distance = 0;
@@ -73,7 +75,7 @@ public class Vocabulary {
         for (int i = 0; i < words.length; i++) {
             simbols[i] = wordToSimbol(words[i]);
             if (simbols[i] == -1) { //buscamos palbra más parecida
-                int bestDistance = 100;
+                int bestDistance = Integer.MAX_VALUE;
                 int bestSimbol = -1;
                 for (int j = 0; j < listWords.size(); j++) {
                     int d = editDistance(listWords.get(j), words[i]);
@@ -82,9 +84,11 @@ public class Vocabulary {
                         bestSimbol = j;
                     }
                 }
-                if (bestDistance <= 3) {
+                if (bestDistance <= MAX_EDIT_DISTANCE) {
                     simbols[i] = bestSimbol;
                     distance += bestDistance;
+                } else {
+                    distance += DISTANCE_WHEN_HIGHER_MAX_EDIT;
                 }
             }
         }
