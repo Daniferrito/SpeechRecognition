@@ -34,6 +34,8 @@ public class MainActivity extends Activity {
         startActivity(new Intent(this, Main3Activity.class));
     }
 
+    public void car     (View v) { startActivity(new Intent(this, CarActivity.class)); }
+
     public void sphinx(View v) {
         if(tB.isChecked())
             startActivity(new Intent(this, SphinxSpaActivity.class));

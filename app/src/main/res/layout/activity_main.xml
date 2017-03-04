@@ -42,11 +42,19 @@
         android:layout_weight="0.15" />
 
     <Button
-        android:text="Android - con gramática"
+        android:text="Android - números"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/button3"
         android:onClick="android3"
+        android:layout_weight="0.10" />
+
+    <Button
+        android:text="Android - Car"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button5"
+        android:onClick="car"
         android:layout_weight="0.10" />
 
     <Button

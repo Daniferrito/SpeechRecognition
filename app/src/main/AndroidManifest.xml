@@ -31,6 +31,9 @@
             android:name=".Main3Activity"
             android:label="@string/title_activity_main3"></activity>
         <activity
+            android:name=".CarActivity"
+            android:label="Car Activity"></activity>
+        <activity
             android:name=".SphinxActivity"
             android:label="@string/title_activity_sphinx"></activity>
         <activity android:name=".SphinxSpaActivity"></activity>
