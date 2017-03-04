@@ -85,13 +85,17 @@ public class Grammar {
 
     public final static int DISTANCE_WHEN_NO_IN_GRAMMAR  = 1000;
 
-    public int validSecuence(String words) {
+    public int validSecuenceScore(String words) {
+        Pair<Integer,int[]> p = validSecuence(words);
+        return p.first;
+    }
+
+    public Pair<Integer,int[]> validSecuence(String words) {
         Pair<Integer,int[]> p = vocSimbols.wordsToSimbols(words) ;
-        if (validSecuence(p.second)) {
-            return p.first;
-        } else {
-            return DISTANCE_WHEN_NO_IN_GRAMMAR;
+        if (!validSecuence(p.second)) {
+            p = new Pair<>(DISTANCE_WHEN_NO_IN_GRAMMAR,p.second);
         }
+        return p;
     }
 
     public boolean validSecuence(int[] simbols) {
@@ -117,17 +121,18 @@ public class Grammar {
         return valid;
     }
 
+
     Pair<String,Integer> bestSecuenceAndScore(List<String> secuences){
         String bestOutput="";              // Si una palabra no esta en voc. la reemplaza por la más
         int bestScore = Integer.MAX_VALUE; // parecida. Selecciona la secuencia de menor distancia
         for (String s: secuences){         // de edición que esté en la gramática
-            int score = validSecuence(s);
-            if (score<bestScore){
-                bestOutput = s;
-                bestScore = score;
-                if (score==0) new Pair(bestOutput, 0);
+            Pair<Integer,int[]> p = validSecuence(s);
+            if (p.first < bestScore){
+                bestOutput = vocSimbols.simbolsToWords(p.second);
+                bestScore = p.first;
+                if (p.first==0) return new Pair(bestOutput, 0);
             }
-            Log.e(TAG, score+" "+s);
+            Log.e(TAG, p.first+" "+s+" >> "+vocSimbols.simbolsToWords(p.second));
         }
         return new Pair(bestOutput, bestScore);
     }

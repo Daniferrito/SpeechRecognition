@@ -5,6 +5,7 @@ import android.util.Pair;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.dani.speechrecognition.Grammar.DISTANCE_WHEN_NO_IN_GRAMMAR;
 import static org.hamcrest.core.Is.is;
@@ -20,13 +21,13 @@ public class GrammarTest {
         grammar.newRule("<NUM>", "<NUM>", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho");
         grammar.newRule("<NUM>", "<END>", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho");
 
-        assertThat(grammar.validSecuence("uno"), is(DISTANCE_WHEN_NO_IN_GRAMMAR));
-        assertThat(grammar.validSecuence("uno uno"), is(0));
-        assertThat(grammar.validSecuence("uno dos tres"), is(0));
-        assertThat(grammar.validSecuence("unos do tres cuatro"), is(2)); // unos>uno (1) do>dos (1)
-        assertThat(grammar.validSecuence("uno dos tres quatres"), is(3)); // quatres > cuatro (3)
-        assertThat(grammar.validSecuence("quatresa uno"), is(DISTANCE_WHEN_NO_IN_GRAMMAR));
-        assertThat(grammar.validSecuence("12345"), is(DISTANCE_WHEN_NO_IN_GRAMMAR));
+        assertThat(grammar.validSecuenceScore("uno"), is(DISTANCE_WHEN_NO_IN_GRAMMAR));
+        assertThat(grammar.validSecuenceScore("uno uno"), is(0));
+        assertThat(grammar.validSecuenceScore("uno dos tres"), is(0));
+        assertThat(grammar.validSecuenceScore("unos do tres cuatro"), is(2)); // unos>uno (1) do>dos (1)
+        assertThat(grammar.validSecuenceScore("uno dos tres quatres"), is(3)); // quatres > cuatro (3)
+        assertThat(grammar.validSecuenceScore("quatresa uno"), is(DISTANCE_WHEN_NO_IN_GRAMMAR));
+        assertThat(grammar.validSecuenceScore("12345"), is(DISTANCE_WHEN_NO_IN_GRAMMAR));
     }
 
     @Test
@@ -36,22 +37,31 @@ public class GrammarTest {
         grammar.newRule("<NUM>", "<NUM>", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho");
         grammar.newRule("<NUM>", "<END>", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho");
 
-        ArrayList<String> list = new ArrayList<>();
+        List<String> list = new ArrayList<>();
         list.add("uno dos tres quatres");  // distancia edición =3
         list.add("unos do tres cuatro");   // distancia edición =2
         String s = grammar.bestSecuence(list);
-        assertThat(s, is("unos do tres cuatro"));
+        assertThat(s, is("uno dos tres cuatro"));
 
         Pair<String, Integer> p = grammar.bestSecuenceAndScore(list);
-        assertThat(p.first, is("unos do tres cuatro"));
+        assertThat(p.first, is("uno dos tres cuatro"));
         assertThat(p.second, is(2));
 
         list = new ArrayList<>();
-/*        list.add("Un dos tres cuatro");
+        list.add("miel dos");  // distancia edición =3
+        list.add("ni el dos");   // distancia edición =2
+
+        Pair<String, Integer> p2 = grammar.bestSecuenceAndScore(list);
+        assertThat(p2.first, is("tres dos"));
+        assertThat(p2.second, is(3));
+
+        list = new ArrayList<>();
+        list.add("Un dos tres cuatro");
         list.add("un dos tres cuatro");
         list.add("1 2 3 4");
-*/        list.add("1234");
+        list.add("1234");
         list.add("uno dos tres cuatro");
+        list = Preprocessing.preprocessingSentences(list);
         p = grammar.bestSecuenceAndScore(list);
         assertThat(p.first, is("uno dos tres cuatro"));
         assertThat(p.second, is(0));

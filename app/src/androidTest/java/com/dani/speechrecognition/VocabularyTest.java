@@ -61,7 +61,7 @@ public class VocabularyTest {
     public void vocabularyValidator_wordsToSimbols() {
         Vocabulary voc = new Vocabulary("casa", "lápiz", "libro", "árbol");
         Pair<Integer,int[]> p = voc.wordsToSimbols("casa árbo libro");
-        String s = voc.simbolsTowords(p.second);
+        String s = voc.simbolsToWords(p.second);
         assertThat(s, is("casa árbol libro "));
         assertThat(p.first, is(1));
     }

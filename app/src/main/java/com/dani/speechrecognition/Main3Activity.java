@@ -9,6 +9,7 @@ import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -50,11 +51,17 @@ public class Main3Activity extends Main2Activity {
             Log.d(TAG, "onResults");
             List<String> outputs = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
             outputs = preprocessingSentences(outputs);
-            String output = grammar.bestSecuence(outputs);
+            //String output = grammar.bestSecuence(outputs);
+            Pair<String,Integer> p = grammar.bestSecuenceAndScore(outputs);
+            String output;
+            if (p.second<1000) {
+                output = p.first;
+            } else {
+                output = "Frase incorrecta";
+            }
             txtSpeechInput.setText(output);
             textToSpeech.speak(output, TextToSpeech.QUEUE_FLUSH, null);
         }
     }
-
 
 }

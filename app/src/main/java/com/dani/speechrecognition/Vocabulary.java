@@ -56,12 +56,16 @@ public class Vocabulary {
         return listWords.get(simbol);
     }
 
-    String simbolsTowords(int[] simbols) {
+    String simbolsToWords(int[] simbols) {
         String words = "";
         for (int i = 0; i < simbols.length; i++) {
-            words += listWords.get(simbols[i]) + " ";
+            if (simbols[i]==-1){
+                words += "<NULL> ";
+            } else {
+                words += listWords.get(simbols[i]) + " ";
+            }
         }
-        return words;
+        return words.trim();
     }
 
     public final static int MAX_EDIT_DISTANCE = 3;
