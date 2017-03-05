@@ -68,7 +68,14 @@ public class Vocabulary {
         return words.trim();
     }
 
-    public final static int MAX_EDIT_DISTANCE = 3;
+    public final static int MAX_PERCENT_EDIT_DISTANCE = 35;
+       // 100*EditDistance(word,voc) / word.length < 35
+       // Palabras 1..2 max EditDistance = 0
+       // Palabras 3..5 max EditDistance = 1
+       // Palabras 6..8 max EditDistance = 2
+       // Palabras 9..11 max EditDistance = 3
+       // Palabras 12..14 max EditDistance = 4
+
     public final static int DISTANCE_WHEN_HIGHER_MAX_EDIT = 100;
 
     Pair<Integer, int[]> wordsToSimbols(String phase) { //Devuelve la distancia de edición acumulada
@@ -88,7 +95,7 @@ public class Vocabulary {
                         bestSimbol = j;
                     }
                 }
-                if (bestDistance <= MAX_EDIT_DISTANCE) {
+                if (100*bestDistance / words[i].length() <= MAX_PERCENT_EDIT_DISTANCE) {
                     simbols[i] = bestSimbol;
                     distance += bestDistance;
                 } else {
