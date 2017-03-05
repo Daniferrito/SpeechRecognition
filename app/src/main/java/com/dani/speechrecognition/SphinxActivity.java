@@ -95,7 +95,8 @@ public class SphinxActivity extends Activity implements
             @Override
             protected void onPostExecute(Exception result) {
                 if (result != null) {
-                    Toast.makeText(SphinxActivity.this, "Failed to init recognizer " + result, Toast.LENGTH_LONG);
+                    tV.setText("Failed");
+                    Toast.makeText(SphinxActivity.this, "Failed to init recognizer " + result, Toast.LENGTH_LONG).show();
                 } else {
                     tV.setText("Ready");
                     Log.e("Tag", "onPostExecute");
