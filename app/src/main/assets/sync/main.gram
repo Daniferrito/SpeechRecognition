@@ -1,0 +1,14 @@
+#JSGF V1.0;
+
+grammar main;
+
+
+<side> = left | right;
+<frtbck> = front | back;
+<part> = <frtbck> <side> door | roof | <frtbck> bumper;
+<digit> = oh | zero | one | two | three | four | five | six | seven |eight | nine;
+<verbo> = fixed | incomplete | (add <error>);
+<error> = painting | scratch | sag;
+
+public <main> = <part> grid <digit> <verbo>;
+/**public <main> = <digit> <digit> <digit> <digit> <digit>;*/
