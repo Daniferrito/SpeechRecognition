@@ -44,7 +44,7 @@ public class CocheGrammar extends Grammar{
         newRule("<PIEZA>","<NUM>","");
 
 //        newRule("<PIEZA>","<END>","completo","defecto","añade bollo","añade mancha");
-        newRule("<NUM>","<END>","completo","defecto","añade bollo","añade mancha");
+        newRule("<NUM>","<END>","completo","defecto");
 //        newRule("<PIEZA>","<AÑADE>","añade");
         newRule("<NUM>","<AÑADE>","añade");
         newRule("<AÑADE>","<END>","bollo","mancha");

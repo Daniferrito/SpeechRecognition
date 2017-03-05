@@ -47,7 +47,7 @@
             android:label="@string/title_activity_sphinx" />
         <activity android:name=".SphinxSpaActivity" />
         <activity android:name=".SphinxFirebaseActivity"/>
-        <uses-library android:name="com.google.android.things"/>
+        <!--uses-library android:name="com.google.android.things"  /-->
     </application>
 
 </manifest>

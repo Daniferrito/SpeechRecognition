@@ -33,8 +33,8 @@ dependencies {
     compile 'com.google.firebase:firebase-database:9.4.0'
 
     //Things
-    provided 'com.google.android.things:androidthings:0.1-devpreview'
-    compile 'com.google.android.things.contrib:driver-button:0.1+'
+    //provided 'com.google.android.things:androidthings:0.1-devpreview'
+    //compile 'com.google.android.things.contrib:driver-button:0.1+'
 }
 ant.importBuild 'assets.xml'
 preBuild.dependsOn(list, checksum)
