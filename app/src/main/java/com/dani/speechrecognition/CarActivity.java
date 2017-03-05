@@ -40,7 +40,7 @@ public class CarActivity extends Main2Activity {
             } else {
                 output = "Frase incorrecta";
             }
-            txtSpeechInput.setText(output);
+            //txtSpeechInput.setText(output);
             textToSpeech.speak(output, TextToSpeech.QUEUE_FLUSH, null);
         }
     }

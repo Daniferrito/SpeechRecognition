@@ -3,6 +3,7 @@ package com.dani.speechrecognition;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ToggleButton;
 
@@ -20,6 +21,8 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         tB = (ToggleButton) findViewById(R.id.toggleButton);
         // TODO: 24/02/2017 Hacer que este botón funcione con MainActivity 2
+
+
     }
 
     public void android1(View v) {
@@ -30,9 +33,7 @@ public class MainActivity extends Activity {
         startActivity(new Intent(this, Main2Activity.class));
     }
 
-    public void android3(View v) {
-        startActivity(new Intent(this, Main3Activity.class));
-    }
+    public void android3(View v) { startActivity(new Intent(this, Main3Activity.class)); }
 
     public void car     (View v) { startActivity(new Intent(this, CarActivity.class)); }
 

@@ -19,6 +19,7 @@ es/noisedict
 es/sendump
 es/transition_matrices
 es/variances
+main.gram
 menu.gram
 principal.gram
 sino.gram

@@ -25,7 +25,7 @@ import static com.dani.speechrecognition.Preprocessing.preprocessingSentences;
 // CON RESTRICCIONES POR GRAMÁTICA
 
 public class Main3Activity extends Main2Activity {
-
+/*
     private String TAG = "Main3";
     private Grammar grammar;
 
@@ -63,5 +63,5 @@ public class Main3Activity extends Main2Activity {
             textToSpeech.speak(output, TextToSpeech.QUEUE_FLUSH, null);
         }
     }
-
+*/
 }
