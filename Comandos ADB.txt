@@ -1,0 +1,19 @@
+
+Lanzar una actividad
+adb shell am start -a android.intent.category.LAUNCHER -n com.dani.speechrecognition/com.dani.speechrecognition.MainActivity 
+adb shell monkey -p com.dani.speechrecognition -c android.intent.category.LAUNCHER 1
+
+Lanzar preferencias
+adb shell am start -a android.settings.SETTINGS
+
+Configurar wifi
+adb shell am startservice -n com.google.wifisetup/.WifiSetupService -a WifiSetupService.Connect -e ssid TP-LINK_ -e passphrase barry1234
+
+Introducir los archivos
+adb root
+adb shell mkdir /data/data/com.google.android.googlequicksearchbox
+adb shell mkdir /data/data/com.google.android.googlequicksearchbox/app_g3_models
+adb shell mkdir /data/data/com.google.android.googlequicksearchbox/app_g3_models/es-ES
+adb shell mkdir /data/data/com.google.android.googlequicksearchbox/app_g3_models/en-US
+adb push data /
+adb shell chmod -R 666 /data/data/com.google.android.googlequicksearchbox/app_g3_models

@@ -44,6 +44,7 @@ public class Main2Activity extends Activity {
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE,
                 this.getPackageName());
+        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_PREFER_OFFLINE,true);
 
         SpeechRecognitionListener listener = new SpeechRecognitionListener();
         speechRecognizer.setRecognitionListener(listener);
@@ -136,9 +137,7 @@ public class Main2Activity extends Activity {
 
         @Override
         public void onRmsChanged(float rmsdB)
-        {
-            Log.d(TAG, "onRmsChanged");
-        }
+        {}
     }
 
     @Override

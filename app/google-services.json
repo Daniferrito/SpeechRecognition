@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "377482381443",
+    "firebase_url": "https://speechrecognition-56c78.firebaseio.com",
+    "project_id": "speechrecognition-56c78",
+    "storage_bucket": "speechrecognition-56c78.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:377482381443:android:2ba61830423316f1",
+        "android_client_info": {
+          "package_name": "com.dani.speechrecognition"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "377482381443-vai68529836rgjijammk4v895rhd6rk1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dani.speechrecognition",
+            "certificate_hash": "1e6af71f02306b8c210e72158b276904e7111a03"
+          }
+        },
+        {
+          "client_id": "377482381443-4q5i1va47d5i1jeekpa08093gvipuhc8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAF2a5rgBQ1mUkRjrMlpYL1R6r4V0YvNuc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "377482381443-4q5i1va47d5i1jeekpa08093gvipuhc8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
