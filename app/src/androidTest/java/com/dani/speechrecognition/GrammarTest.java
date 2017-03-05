@@ -24,8 +24,8 @@ public class GrammarTest {
         assertThat(grammar.validSecuenceScore("uno"), is(DISTANCE_WHEN_NO_IN_GRAMMAR));
         assertThat(grammar.validSecuenceScore("uno uno"), is(0));
         assertThat(grammar.validSecuenceScore("uno dos tres"), is(0));
-        assertThat(grammar.validSecuenceScore("unos do tres cuatro"), is(2)); // unos>uno (1) do>dos (1)
-        assertThat(grammar.validSecuenceScore("uno dos tres quatres"), is(3)); // quatres > cuatro (3)
+        assertThat(grammar.validSecuenceScore("unos do tres cuatro"), is(DISTANCE_WHEN_NO_IN_GRAMMAR)); // unos>uno (1) do>dos (1)
+        assertThat(grammar.validSecuenceScore("uno dos tres quatres"), is(DISTANCE_WHEN_NO_IN_GRAMMAR)); // quatres > cuatro (3)
         assertThat(grammar.validSecuenceScore("quatresa uno"), is(DISTANCE_WHEN_NO_IN_GRAMMAR));
         assertThat(grammar.validSecuenceScore("12345"), is(DISTANCE_WHEN_NO_IN_GRAMMAR));
     }
@@ -41,19 +41,19 @@ public class GrammarTest {
         list.add("uno dos tres quatres");  // distancia edición =3
         list.add("unos do tres cuatro");   // distancia edición =2
         String s = grammar.bestSecuence(list);
-        assertThat(s, is("uno dos tres cuatro"));
+        assertThat(s, is("uno dos tres <NULL>"));
 
         Pair<String, Integer> p = grammar.bestSecuenceAndScore(list);
-        assertThat(p.first, is("uno dos tres cuatro"));
-        assertThat(p.second, is(2));
+        assertThat(p.first, is("uno dos tres <NULL>"));
+        assertThat(p.second, is(DISTANCE_WHEN_NO_IN_GRAMMAR));
 
         list = new ArrayList<>();
         list.add("miel dos");  // distancia edición =3
         list.add("ni el dos");   // distancia edición =2
 
         Pair<String, Integer> p2 = grammar.bestSecuenceAndScore(list);
-        assertThat(p2.first, is("tres dos"));
-        assertThat(p2.second, is(3));
+        assertThat(p2.first, is("<NULL> dos"));
+        assertThat(p2.second, is(DISTANCE_WHEN_NO_IN_GRAMMAR));
 
         list = new ArrayList<>();
         list.add("Un dos tres cuatro");

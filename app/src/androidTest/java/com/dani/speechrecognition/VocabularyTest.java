@@ -6,6 +6,7 @@ import android.util.Pair;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static com.dani.speechrecognition.Vocabulary.DISTANCE_WHEN_HIGHER_MAX_EDIT;
 import static com.dani.speechrecognition.Vocabulary.editDistance;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -51,10 +52,10 @@ public class VocabularyTest {
         assertThat(p.second.length, is(1));
         assertThat(p.second[0], is(0));
         p = voc.wordsToSimbols("lápiz arbo");
-        assertThat(p.first, is(2));
+        assertThat(p.first, is(DISTANCE_WHEN_HIGHER_MAX_EDIT));
         assertThat(p.second.length, is(2));
         assertThat(p.second[0], is(1));
-        assertThat(p.second[1], is(3));
+        assertThat(p.second[1], is(-1));
     }
 
     @Test
@@ -62,7 +63,7 @@ public class VocabularyTest {
         Vocabulary voc = new Vocabulary("casa", "lápiz", "libro", "árbol");
         Pair<Integer,int[]> p = voc.wordsToSimbols("casa árbo libro");
         String s = voc.simbolsToWords(p.second);
-        assertThat(s, is("casa árbol libro "));
+        assertThat(s, is("casa árbol libro"));
         assertThat(p.first, is(1));
     }
 }
