@@ -4,7 +4,7 @@ package com.dani.speechrecognition;
  * Created by Jesús Tomás on 04/03/2017.
  */
 
-public class CarGrammar extends Grammar{
+public class CocheGrammar extends Grammar{
 
 /*
       capó                  grid 1|2|3..8       completo
@@ -24,9 +24,9 @@ public class CarGrammar extends Grammar{
       pilar c
       */
 
-    CarGrammar(){
+    CocheGrammar(){
         super(100); //100 = tamaño máximo de vocabulario
-        newRule("<INI>","<PIEZA>","hood","roof","box");
+        newRule("<INI>","<PIEZA>","capó","techo","box");
         newRule("<INI>","<PIEZA>","capó","techo","box");
         newRule("<INI>","<PUERTA>","puerta");
         newRule("<PUERTA>","<PIEZA>","derecha","izquierda");

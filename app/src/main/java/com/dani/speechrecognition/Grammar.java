@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * Created by Jesús Tomás on 17/02/2017.
- * Gramáticas deterministas (nolo podemos estar en un estado)
+ * Gramáticas deterministas ¿? (nolo podemos estar en un estado)
  * <p>
  * Formada por nodos y arcos, cada arco cosume una palabra
  * Regla: desde un nodo, consumiento una palabra pasamos a otro nodo
@@ -23,13 +23,21 @@ import java.util.List;
 public class Grammar {
 
     class Rule {
-        int arc[]; //  arco[simbol] = nodo_alcanzado
+        int arc[];         //  arco[simbol] = nodo_alcanzado
+        int noSimbolNode;  // Podemos saltar a este nodo sin consumir símbolo
+
         Rule(Vocabulary vocabulary, int iEndNode, String... words) {
+            noSimbolNode = NULL_NODE;  //Por defecto no hay  noSimbolNode
             arc = new int[vocabulary.getMaxSize()];
             for (String word : words) {
-                int simbol = vocabulary.wordToSimbolAdding(word);
-                arc[simbol] = iEndNode;
+                if (word.equals("")) {
+                    noSimbolNode = iEndNode;
+                } else {
+                    int simbol = vocabulary.wordToSimbolAdding(word);
+                    arc[simbol] = iEndNode;
+                }
             }
+
         }
     }
 
@@ -45,9 +53,9 @@ public class Grammar {
         }
     }
 
-    List<Node> nodes; //Lista de nodos de la gramática
-    Vocabulary vocSimbols;
-    Vocabulary vocNodes;
+    List<Node> nodes;       // Lista de nodos de la gramática
+    Vocabulary vocSimbols;  // Palabras que admite
+    Vocabulary vocNodes;    // Nombres de las estados
 
     protected static final String TAG = "Grammar";
     public static int NULL_NODE = 0;
@@ -116,6 +124,9 @@ public class Grammar {
                 } else {
                     valid = valid || validSecuence(simbols, i + 1, destNode);
                 }
+            }
+            if (rule.noSimbolNode != NULL_NODE){
+                valid = valid || validSecuence(simbols, i, rule.noSimbolNode);
             }
         }
         return valid;
