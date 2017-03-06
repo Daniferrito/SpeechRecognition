@@ -27,7 +27,7 @@ public class CarActivity extends Main2Activity {
         super.onCreate(savedInstanceState);
         SpeechRecognitionListener2 listener = new SpeechRecognitionListener2();
         speechRecognizer.setRecognitionListener(listener);
-        grammar = new CarGrammar();
+        grammar = new CarGrammar("es-ES");
     }
 
     class SpeechRecognitionListener2 extends SpeechRecognitionListener {

@@ -26,7 +26,7 @@ public class Main2Activity extends Activity {
     //protected ImageButton btnSpeak;
     //protected TextView txtSpeechInput;
 
-    private String BUTTON_GPIO_PIN = "BCM21";
+    private String BUTTON_GPIO_PIN = "BCM4";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +98,7 @@ public class Main2Activity extends Activity {
         @Override
         public void onError(int error) {
 
-            //Log.e(TAG, "error = " + error);
+            Log.e(TAG, "error = " + error);
         }
 
         @Override
