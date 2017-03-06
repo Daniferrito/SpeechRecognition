@@ -6,9 +6,13 @@ import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.util.Pair;
 
+import com.daferto.common.CarGrammar;
+import com.daferto.common.Grammar;
+
 import java.util.List;
 
-import static com.dani.speechrecognition.Preprocessing.preprocessingSentences;
+import static com.daferto.common.Preprocessing.preprocessingSentences;
+
 
 // RECONOCIMIENTO CON ANDROID BASADO EN CLASE SpeechRecognizer
 // CON RESTRICCIONES POR GRAMÁTICA
@@ -23,7 +27,7 @@ public class CarActivity extends Main2Activity {
         super.onCreate(savedInstanceState);
         SpeechRecognitionListener2 listener = new SpeechRecognitionListener2();
         speechRecognizer.setRecognitionListener(listener);
-        grammar = new CarGrammar();
+        grammar = new CarGrammar(lang);
     }
 
     class SpeechRecognitionListener2 extends SpeechRecognitionListener {

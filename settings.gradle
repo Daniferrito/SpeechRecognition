@@ -1,1 +1,1 @@
-include ':app', ':speechjava'
+include ':app', ':speechjava', ':appthings', ':common'

@@ -1,13 +1,12 @@
 package com.dani.speechrecognition;
 
 import android.app.Activity;
-import android.media.MediaPlayer;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.Toast;
+
+import com.daferto.common.FirebaseConection;
 
 import java.io.File;
 import java.io.IOException;

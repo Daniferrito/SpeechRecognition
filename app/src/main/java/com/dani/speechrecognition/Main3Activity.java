@@ -1,25 +1,5 @@
 package com.dani.speechrecognition;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.media.AudioManager;
-import android.os.Bundle;
-import android.speech.RecognitionListener;
-import android.speech.RecognizerIntent;
-import android.speech.SpeechRecognizer;
-import android.speech.tts.TextToSpeech;
-import android.util.Log;
-import android.util.Pair;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.dani.speechrecognition.Preprocessing.preprocessingSentences;
 
 // RECONOCIMIENTO CON ANDROID BASADO EN CLASE SpeechRecognizer
 // CON RESTRICCIONES POR GRAMÁTICA

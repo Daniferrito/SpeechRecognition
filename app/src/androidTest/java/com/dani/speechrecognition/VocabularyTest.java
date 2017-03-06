@@ -1,10 +1,8 @@
 package com.dani.speechrecognition;
 
-import android.support.test.runner.AndroidJUnit4;
 import android.util.Pair;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import static com.dani.speechrecognition.Vocabulary.DISTANCE_WHEN_HIGHER_MAX_EDIT;
 import static com.dani.speechrecognition.Vocabulary.editDistance;
