@@ -25,12 +25,12 @@
             android:name=".Main1Activity"
             android:label="@string/title_activity_main1" />
         <activity
-            android:name=".Main2Activity"
+            android:name=".FreeTextActivity"
             android:label="@string/title_activity_main2" >
 
         </activity>
         <activity
-            android:name=".Main3Activity"
+            android:name=".NumberActivity"
             android:label="@string/title_activity_main3" />
         <activity
             android:name=".CarActivity"

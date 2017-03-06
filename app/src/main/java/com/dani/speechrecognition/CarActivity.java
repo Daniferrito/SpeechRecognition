@@ -17,10 +17,10 @@ import static com.daferto.common.Preprocessing.preprocessingSentences;
 // RECONOCIMIENTO CON ANDROID BASADO EN CLASE SpeechRecognizer
 // CON RESTRICCIONES POR GRAMÁTICA
 
-public class CarActivity extends Main2Activity {
+public class CarActivity extends FreeTextActivity {
 
     private String TAG = "AutoActivity";
-    private Grammar grammar;
+    Grammar grammar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +42,11 @@ public class CarActivity extends Main2Activity {
             if (p.second<1000) {
                 output = p.first;
             } else {
-                output = "Frase incorrecta";
+                if (lang.equals("en_US")) {
+                    output = "Wrong sentence";
+                } else {
+                    output = "Frase incorrecta";
+                }
             }
             //txtSpeechInput.setText(output);
             textToSpeech.speak(output, TextToSpeech.QUEUE_FLUSH, null);

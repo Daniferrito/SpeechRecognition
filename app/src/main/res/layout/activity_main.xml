@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/button2"
-        android:onClick="android2"
+        android:onClick="freeText"
         android:layout_weight="0.15" />
 
     <Button
@@ -46,7 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/button3"
-        android:onClick="android3"
+        android:onClick="number"
         android:layout_weight="0.10" />
 
     <Button

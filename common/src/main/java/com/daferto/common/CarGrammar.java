@@ -1,5 +1,7 @@
 package com.daferto.common;
 
+import android.util.Log;
+
 /**
  * Created by Jesús Tomás on 04/03/2017.
  */
@@ -8,7 +10,7 @@ public class CarGrammar extends Grammar{
 
 /*
       hood                  grid 1|2|3..8       completed
-      roof                  <nada>              incompleted
+      roof                  <nada>              incomplete
       box                                       add sag
       tailgate                                  add mottle
       left door
@@ -21,7 +23,7 @@ public class CarGrammar extends Grammar{
       bravo pillar
       charlie pillar
 
-      capó                  grid 1|2|3..8       completo
+      capó                  cuadrícula 1|2|3..8 completo
       techo                 <nada>              defecto
       box                                       añade bollo
       portón box                                añade mancha
@@ -40,6 +42,7 @@ public class CarGrammar extends Grammar{
 
     public CarGrammar(String lang){
         super(100); //100 = tamaño máximo de vocabulario
+        Log.e("gra",lang);
         if(lang.equals("en_US")) {
             newRule("<INI>","<PIECE>","hood","roof","box","tailgate");
             newRule("<INI>","<LEFT_RIGHT>","left","right","both");
@@ -51,7 +54,7 @@ public class CarGrammar extends Grammar{
             newRule("<GRID>", "<NUM>", "one", "two", "three", "four", "five", "six", "seven", "eight");
             newRule("<PIECE>","<NUM>","");
 
-            newRule("<NUM>","<END>","completed","incompleted");
+            newRule("<NUM>","<END>","completed","incomplete");
             newRule("<NUM>","<ADD>","add");
             newRule("<ADD>","<END>","sag","mottle");
         } else {
@@ -66,7 +69,7 @@ public class CarGrammar extends Grammar{
             newRule("<INI>","<PILAR>","pilar");
             newRule("<PILAR>","<PIEZA>","a","b","c");
 
-            newRule("<PIEZA>","<GRID>","grid");
+            newRule("<PIEZA>","<GRID>","cuadrícula");
             newRule("<GRID>", "<NUM>", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho");
             newRule("<PIEZA>","<NUM>","");
 

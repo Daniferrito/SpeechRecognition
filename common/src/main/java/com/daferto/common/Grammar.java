@@ -79,7 +79,7 @@ public class Grammar {
     public void newRule(String iniNode, String endNode, String... words) {
         int iIniNode = vocNodes.wordToSimbol(iniNode);
         if (iIniNode == -1) {
-            Log.e("GRAMMAR", "Error en Regla: Simbolo " + iniNode + " no existe.");
+            Log.e(TAG, "Error en Regla: Simbolo " + iniNode + " no existe.");
             return;
         }
         int iEndNode = vocNodes.wordToSimbol(endNode);
@@ -91,17 +91,17 @@ public class Grammar {
         node.rules.add(new Rule(vocSimbols, iEndNode, words));
     }
 
-    public final static int DISTANCE_WHEN_NO_IN_GRAMMAR  = 1000;
+    public final static int DISTANCE_WHEN_NO_IN_GRAMMAR = 1000;
 
     public int validSecuenceScore(String words) {
-        Pair<Integer,int[]> p = validSecuence(words);
+        Pair<Integer, int[]> p = validSecuence(words);
         return p.first;
     }
 
-    public Pair<Integer,int[]> validSecuence(String words) {
-        Pair<Integer,int[]> p = vocSimbols.wordsToSimbols(words) ;
+    public Pair<Integer, int[]> validSecuence(String words) {
+        Pair<Integer, int[]> p = vocSimbols.wordsToSimbols(words);
         if (!validSecuence(p.second)) {
-            p = new Pair<>(DISTANCE_WHEN_NO_IN_GRAMMAR,p.second);
+            p = new Pair<>(DISTANCE_WHEN_NO_IN_GRAMMAR, p.second);
         }
         return p;
     }
@@ -110,11 +110,30 @@ public class Grammar {
         return validSecuence(simbols, 0, 1);
     }
 
+    public Pair<String, Integer> bestSecuenceAndScore(List<String> secuences) {
+        String bestOutput = "";              // Si una palabra no esta en voc. la reemplaza por la más
+        int bestScore = Integer.MAX_VALUE; // parecida. Selecciona la secuencia de menor distancia
+        for (String s : secuences) {         // de edición que esté en la gramática
+            Pair<Integer, int[]> p = validSecuence(s);
+            if (p.first < bestScore) {
+                bestOutput = vocSimbols.simbolsToWords(p.second);
+                bestScore = p.first;
+                if (p.first == 0) {
+                    Log.e(TAG, p.first + " " + s + " >> " + vocSimbols.simbolsToWords(p.second));
+                    return new Pair(bestOutput, 0);
+                }
+            }
+            Log.e(TAG, p.first + " " + s + " >> " + vocSimbols.simbolsToWords(p.second));
+        }
+        return new Pair(bestOutput, bestScore);
+    }
+
+
     public boolean validSecuence(int[] simbols, int i, int iNode) {
         boolean valid = false;
         Node node = nodes.get(iNode);
         for (Rule rule : node.rules) {
-            if (simbols[i]==-1) return false;  //Contemplar inserción de símbolos con un peso
+            if (simbols[i] == -1) return false;  //Contemplar inserción de símbolos con un peso
             int destNode = rule.arc[simbols[i]];
             if (destNode != NULL_NODE) {
                 if (i == simbols.length - 1) {
@@ -125,31 +144,15 @@ public class Grammar {
                     valid = valid || validSecuence(simbols, i + 1, destNode);
                 }
             }
-            if (rule.noSimbolNode != NULL_NODE){
+            if (rule.noSimbolNode != NULL_NODE) {
                 valid = valid || validSecuence(simbols, i, rule.noSimbolNode);
             }
         }
         return valid;
     }
 
-
-    public Pair<String,Integer> bestSecuenceAndScore(List<String> secuences){
-        String bestOutput="";              // Si una palabra no esta en voc. la reemplaza por la más
-        int bestScore = Integer.MAX_VALUE; // parecida. Selecciona la secuencia de menor distancia
-        for (String s: secuences){         // de edición que esté en la gramática
-            Pair<Integer,int[]> p = validSecuence(s);
-            if (p.first < bestScore){
-                bestOutput = vocSimbols.simbolsToWords(p.second);
-                bestScore = p.first;
-                if (p.first==0) return new Pair(bestOutput, 0);
-            }
-            Log.e(TAG, p.first+" "+s+" >> "+vocSimbols.simbolsToWords(p.second));
-        }
-        return new Pair(bestOutput, bestScore);
-    }
-
-    String bestSecuence(List<String> secuences){
-        Pair<String,Integer> pair = bestSecuenceAndScore(secuences);
+    String bestSecuence(List<String> secuences) {
+        Pair<String, Integer> pair = bestSecuenceAndScore(secuences);
         return pair.first;
     }
 

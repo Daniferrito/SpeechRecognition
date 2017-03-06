@@ -21,7 +21,7 @@ import java.util.Locale;
 
 // RECONOCIMIENTO CON ANDROID BASADO EN CLASE SpeechRecognizer
 
-public class Main2Activity extends Activity {
+public class FreeTextActivity extends Activity {
 
     protected static final String TAG = "Main2";
     protected SpeechRecognizer speechRecognizer;
@@ -30,8 +30,6 @@ public class Main2Activity extends Activity {
     protected ImageButton btnSpeak;
     protected TextView txtSpeechInput;
     protected String lang;
-
-    private String BUTTON_GPIO_PIN = "BCM21";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +42,8 @@ public class Main2Activity extends Activity {
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE,
                 this.getPackageName());
-        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_PREFER_OFFLINE,true);
+        //speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_PREFER_OFFLINE,true);
+        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS,100);
         lang = getIntent().getExtras().getString(RecognizerIntent.EXTRA_LANGUAGE,"es_ES");
         speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE,lang);
 
@@ -61,8 +60,13 @@ public class Main2Activity extends Activity {
                 speechRecognizer.startListening(speechRecognizerIntent);
             }
         });
-        textToSpeech = new TextToSpeech(this,null);
-        textToSpeech.setLanguage(Locale.forLanguageTag(lang));
+        textToSpeech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                textToSpeech.setLanguage(new Locale(lang));
+            }
+        });
+
     }
 
 
