@@ -40,7 +40,7 @@ public class CarGrammar extends Grammar{
 
     public CarGrammar(String lang){
         super(100); //100 = tamaño máximo de vocabulario
-        if(lang.equals("en-US")) {
+        if(lang.equals("en_US")) {
             newRule("<INI>","<PIECE>","hood","roof","box","tailgate");
             newRule("<INI>","<LEFT_RIGHT>","left","right","both");
             newRule("<LEFT_RIGHT>","<PIECE>","door", "fender");
