@@ -45,7 +45,7 @@ public class Main2Activity extends Activity {
         speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE,
                 this.getPackageName());
         speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_PREFER_OFFLINE,true);
-        lang = savedInstanceState.getString(RecognizerIntent.EXTRA_LANGUAGE,"es-ES");
+        lang = getIntent().getExtras().getString(RecognizerIntent.EXTRA_LANGUAGE,"es-ES");
         speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE,lang);
 
         SpeechRecognitionListener listener = new SpeechRecognitionListener();
