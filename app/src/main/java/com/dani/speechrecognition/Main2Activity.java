@@ -38,7 +38,7 @@ public class Main2Activity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main1);
         //((AudioManager)getSystemService(AUDIO_SERVICE)).setStreamVolume(AudioManager.STREAM_MUSIC,AudioManager.ADJUST_MUTE,0);
-        speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this, ComponentName.unflattenFromString("com.google.android.voicesearch/.GoogleRecognitionService"));
+        speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
         speechRecognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);

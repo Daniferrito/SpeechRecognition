@@ -42,7 +42,14 @@ public class MainActivity extends Activity {
 
     public void android3(View v) { startActivity(new Intent(this, Main3Activity.class)); }
 
-    public void car     (View v) { startActivity(new Intent(this, CarActivity.class)); }
+    public void car     (View v) {
+        Intent i = new Intent(this,CarActivity.class);
+        if(tB.isChecked())
+            i.putExtra(RecognizerIntent.EXTRA_LANGUAGE,"es-ES");
+        else
+            i.putExtra(RecognizerIntent.EXTRA_LANGUAGE,"en-US");
+        startActivity(i);
+        }
 
     public void sphinx(View v) {
         if(tB.isChecked())
