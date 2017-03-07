@@ -1,6 +1,6 @@
 package com.daferto.common;
 
-import android.util.Pair;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -103,7 +103,7 @@ public class Vocabulary {
                 }
             }
         }
-        return new Pair(distance,simbols);
+        return new Pair<>(distance,simbols);
     }
 
     public static int min(int a, int b, int c) {

@@ -1,7 +1,6 @@
 package com.daferto.common;
 
 import android.util.Log;
-import android.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -119,11 +118,11 @@ public class Grammar {
                 bestOutput = vocSimbols.simbolsToWords(p.second);
                 bestScore = p.first;
                 if (p.first == 0) {
-                    Log.e(TAG, p.first + " " + s + " >> " + vocSimbols.simbolsToWords(p.second));
+                    //Log.e(TAG, p.first + " " + s + " >> " + vocSimbols.simbolsToWords(p.second));
                     return new Pair(bestOutput, 0);
                 }
             }
-            Log.e(TAG, p.first + " " + s + " >> " + vocSimbols.simbolsToWords(p.second));
+            //Log.e(TAG, p.first + " " + s + " >> " + vocSimbols.simbolsToWords(p.second));
         }
         return new Pair(bestOutput, bestScore);
     }

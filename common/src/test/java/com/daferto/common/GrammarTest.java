@@ -1,13 +1,13 @@
-package com.dani.speechrecognition;
+package com.daferto.common;
 
-import android.util.Pair;
+
 
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.dani.speechrecognition.Grammar.DISTANCE_WHEN_NO_IN_GRAMMAR;
+import static com.daferto.common.Grammar.DISTANCE_WHEN_NO_IN_GRAMMAR;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 

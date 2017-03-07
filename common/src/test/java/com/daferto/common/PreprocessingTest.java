@@ -1,13 +1,13 @@
-package com.dani.speechrecognition;
+package com.daferto.common;
 
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.dani.speechrecognition.Preprocessing.deleteDuplicates;
-import static com.dani.speechrecognition.Preprocessing.preprocessingSentences;
-import static com.dani.speechrecognition.Preprocessing.replaceSymbols;
+import static com.daferto.common.Preprocessing.deleteDuplicates;
+import static com.daferto.common.Preprocessing.preprocessingSentences;
+import static com.daferto.common.Preprocessing.replaceSymbols;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 

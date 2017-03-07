@@ -1,14 +1,11 @@
-package com.dani.speechrecognition;
-
-import android.util.Pair;
+package com.daferto.common;
 
 import org.junit.Test;
 
-import static com.dani.speechrecognition.Vocabulary.DISTANCE_WHEN_HIGHER_MAX_EDIT;
-import static com.dani.speechrecognition.Vocabulary.editDistance;
+import static com.daferto.common.Vocabulary.DISTANCE_WHEN_HIGHER_MAX_EDIT;
+import static com.daferto.common.Vocabulary.editDistance;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 public class VocabularyTest {
 
