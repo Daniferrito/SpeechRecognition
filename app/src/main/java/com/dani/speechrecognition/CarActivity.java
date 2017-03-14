@@ -4,10 +4,10 @@ import android.os.Bundle;
 import android.speech.SpeechRecognizer;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
-import android.util.Pair;
 
 import com.daferto.common.CarGrammar;
 import com.daferto.common.Grammar;
+import com.daferto.common.Pair;
 
 import java.util.List;
 

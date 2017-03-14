@@ -31,8 +31,6 @@ dependencies {
 
     compile project(path: ':common')
 }
-ant.importBuild 'assets.xml'
-preBuild.dependsOn(list, checksum)
-clean.dependsOn(clean_assets)
+
 
 apply plugin: 'com.google.gms.google-services'
