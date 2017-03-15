@@ -8,6 +8,7 @@ adb shell am start -a android.settings.SETTINGS
 
 Configurar wifi
 adb shell am startservice -n com.google.wifisetup/.WifiSetupService -a WifiSetupService.Connect -e ssid TP-LINK_ -e passphrase barry1234
+adb shell am startservice -n com.google.wifisetup/.WifiSetupService -a WifiSetupService.Connect -e ssid Dani -e passphrase 12345679
 
 Introducir los archivos
 adb root

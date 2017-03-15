@@ -1,0 +1,14 @@
+#JSGF V1.0;
+
+grammar main;
+
+
+public <main> = <part> grid <digit> <verbo>;
+
+<side> = left | right;
+<frtbck> = front | back;
+<albrdel> = alpha | bravo | delta;
+<part> = <frtbck> <side> door | roof | <frtbck> fender | box | tailgate | <albrdel> pillar;
+<digit> = one | two | three | four | five | six | seven | eight;
+<verbo> = fixed | incomplete | (add <error>);
+<error> = painting error | scratch | sag | mottle;

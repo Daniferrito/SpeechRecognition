@@ -16,38 +16,32 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".Main1Activity"
             android:label="@string/title_activity_main1" />
         <activity
-            android:name=".Main2Activity"
+            android:name=".FreeTextActivity"
             android:label="@string/title_activity_main2" >
 
         </activity>
         <activity
-            android:name=".Main3Activity"
+            android:name=".NumberActivity"
             android:label="@string/title_activity_main3" />
         <activity
             android:name=".CarActivity"
             android:label="Car Activity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.IOT_LAUNCHER"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
         </activity>
         <activity
             android:name=".SphinxActivity"
             android:label="@string/title_activity_sphinx" />
         <activity android:name=".SphinxSpaActivity" />
         <activity android:name=".SphinxFirebaseActivity"/>
-        <!--uses-library android:name="com.google.android.things"  /-->
+
     </application>
 
 </manifest>

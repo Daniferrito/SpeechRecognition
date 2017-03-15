@@ -4,26 +4,30 @@ import android.os.Bundle;
 import android.speech.SpeechRecognizer;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
-import android.util.Pair;
+
+import com.daferto.common.CarGrammar;
+import com.daferto.common.Grammar;
+import com.daferto.common.Pair;
 
 import java.util.List;
 
-import static com.dani.speechrecognition.Preprocessing.preprocessingSentences;
+import static com.daferto.common.Preprocessing.preprocessingSentences;
+
 
 // RECONOCIMIENTO CON ANDROID BASADO EN CLASE SpeechRecognizer
 // CON RESTRICCIONES POR GRAMÁTICA
 
-public class CarActivity extends Main2Activity {
+public class CarActivity extends FreeTextActivity {
 
     private String TAG = "AutoActivity";
-    private Grammar grammar;
+    Grammar grammar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SpeechRecognitionListener2 listener = new SpeechRecognitionListener2();
         speechRecognizer.setRecognitionListener(listener);
-        grammar = new CarGrammar();
+        grammar = new CarGrammar(lang);
     }
 
     class SpeechRecognitionListener2 extends SpeechRecognitionListener {
@@ -38,7 +42,11 @@ public class CarActivity extends Main2Activity {
             if (p.second<1000) {
                 output = p.first;
             } else {
-                output = "Frase incorrecta";
+                if (lang.equals("en_US")) {
+                    output = "Wrong sentence";
+                } else {
+                    output = "Frase incorrecta";
+                }
             }
             //txtSpeechInput.setText(output);
             textToSpeech.speak(output, TextToSpeech.QUEUE_FLUSH, null);
